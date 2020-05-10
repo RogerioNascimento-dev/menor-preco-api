@@ -34,6 +34,24 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+
+  //Um usuário pode ter várias listas associadas a ele
+  lists(){
+    return this.hasMany('App/Model/List')
+  }
+
+  products(){
+    return this.hasMany('App/Model/Product')
+  }
+
+  marks(){
+    return this.hasMany('App/Model/Mark')
+  }
+
+  markProducts(){
+    return this.hasMany('App/Model/MarkProduct')
+  }
+
 }
 
 module.exports = User

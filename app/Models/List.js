@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class List extends Model {
+    products(){
+        return this.belongsToMany('App/Model/Product')
+    }
 }
 
 module.exports = List
