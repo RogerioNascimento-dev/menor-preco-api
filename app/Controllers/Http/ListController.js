@@ -1,5 +1,7 @@
 'use strict'
 
+const List = use('App/Models/List')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -18,20 +20,13 @@ class ListController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+
+    const lists = await List.query().with('products').fetch()
+    return lists
+    
   }
 
-  /**
-   * Render a form to be used for creating a new list.
-   * GET lists/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
+  
   /**
    * Create/save a new list.
    * POST lists
@@ -40,7 +35,9 @@ class ListController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
+    const list = await List.create({user_id: auth.user.id})
+    return list
   }
 
   /**
@@ -52,19 +49,17 @@ class ListController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params,response }) {
+    try{
+      const list = await List.findOrFail(params.id)
 
-  /**
-   * Render a form to update an existing list.
-   * GET lists/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+      //retorna os relacionamentos, semelhante ao with, porem aqui 
+      //é usado desta forma por ser um único objeto
+      await list.load('products')
+      return list
+    }catch(err){
+      return response.status(err.status).send({error:{message:'A lista não foi localizada.'}})
+    }
   }
 
   /**
@@ -86,7 +81,13 @@ class ListController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, response }) {
+    try{
+      const list = await List.findOrFail(params.id)
+      await list.delete()
+    }catch(err){
+      return response.status(err.status).send({erro:{mesage:"Não foi possível localizar esta lista"}})
+    }
   }
 }
 

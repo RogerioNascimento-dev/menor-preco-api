@@ -5,7 +5,10 @@ const Model = use('Model')
 
 class List extends Model {
     products(){
-        return this.belongsToMany('App/Model/Product')
+        return this.belongsToMany('App/Models/Product')
+    }
+    user(){
+        return this.belongsTo('App/Models/User')
     }
 }
 
