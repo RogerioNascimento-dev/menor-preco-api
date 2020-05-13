@@ -21,4 +21,11 @@ Route.group(() =>{
     * index,show,update,delete,destroy
     */
     Route.resource('/lists', 'ListController').apiOnly()
+
+
+    Route.get('users', 'UserController.index')
+    Route.get('users/:id', 'UserController.show')
+    Route.delete('users/:id', 'UserController.destroy')
+
+    Route.get('sessions', 'SessionController.index')
 }).middleware(['auth'])

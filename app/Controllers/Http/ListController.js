@@ -37,6 +37,7 @@ class ListController {
    */
   async store ({ request, response, auth }) {
     const list = await List.create({user_id: auth.user.id})
+    console.log(auth.user)
     return list
   }
 

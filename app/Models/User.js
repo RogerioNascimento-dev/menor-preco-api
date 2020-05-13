@@ -7,9 +7,17 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
-  static boot () {
-    super.boot()
 
+  /*
+   * Informa para o adonis que estes campo não deve ser retornado
+   * nas consultas deste model    
+  */
+  static get hidden(){
+    return ['password']
+  }
+
+  static boot () {
+    super.boot()    
     /**
      * A hook to hash the user password before saving
      * it to the database.

@@ -27,7 +27,7 @@ class ListProductSchema extends Schema {
   }
 
   down () {
-    this.drop('list_products')
+    this.drop('list_product')
   }
 }
 

@@ -35,7 +35,7 @@ class MartProductSchema extends Schema {
   }
 
   down () {
-    this.drop('mart_products')
+    this.drop('mart_product')
   }
 }
 
