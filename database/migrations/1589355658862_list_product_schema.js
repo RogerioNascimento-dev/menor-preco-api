@@ -5,15 +5,7 @@ const Schema = use('Schema')
 
 class ListProductSchema extends Schema {
   up () {
-    this.create('list_product', (table) => {
-      table.increments()
-      table
-      .integer('product_id')
-      .unsigned()
-      .references('id')
-      .inTable('products')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')  
+    this.alter('list_product', (table) => {
       table
       .integer('list_id')
       .unsigned()
@@ -21,13 +13,13 @@ class ListProductSchema extends Schema {
       .inTable('lists')
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
-      table.integer('quantity').notNullable()
-      table.timestamps()
     })
   }
 
   down () {
-    this.drop('list_product')
+    this.table('list_product', (table) => {
+      // reverse alternations
+    })
   }
 }
 

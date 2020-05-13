@@ -37,7 +37,19 @@ class ListController {
    */
   async store ({ request, response, auth }) {
     const list = await List.create({user_id: auth.user.id})
-    console.log(auth.user)
+    const product_ids = request.input('product_ids')
+    const product_qtd = request.input('product_qtd')
+    
+    /*
+     * attach não pode ser usado neste caso pq existe 
+     * atributos alem do relacionamento
+    */
+    let indice = 0;
+    await list.products().attach(product_ids, (row) =>{        
+        row.quantity = product_qtd[indice]         
+        indice++
+    })
+     await list.load('products')
     return list
   }
 
