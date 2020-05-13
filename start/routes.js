@@ -21,7 +21,11 @@ Route.group(() =>{
     * index,show,update,delete,destroy
     */
     Route.resource('/lists', 'ListController').apiOnly()
-
+    
+    Route.get('products', 'ProductController.index')
+    Route.get('products/:id', 'ProductController.show')
+    Route.delete('products/:id', 'ProductController.destroy')
+    Route.post('products', 'ProductController.store').validator('Product')
 
     Route.get('users', 'UserController.index')
     Route.get('users/:id', 'UserController.show')
