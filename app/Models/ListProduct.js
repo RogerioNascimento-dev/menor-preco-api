@@ -5,10 +5,10 @@ const Model = use('Model')
 
 class ListProduct extends Model {
     list(){
-        return this.belongsTo('App/Model/List')
+        return this.belongsTo('App/Models/List')
     }
     product(){
-        return this.belongsTo('App/Model/Product')
+        return this.belongsTo('App/Models/Product')
     }
 }
 

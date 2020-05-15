@@ -64,12 +64,11 @@ class ListController {
    */
   async show ({ params,response }) {
     try{
-      const list = await List.findOrFail(params.id)
-
+      const list = await List.findOrFail(params.id)     
       //retorna os relacionamentos, semelhante ao with, porem aqui 
       //é usado desta forma por ser um único objeto
-      await list.load('products')
-      return list
+      await list.load('products')   
+      return list         
     }catch(err){
       return response.status(err.status).send({error:{message:'A lista não foi localizada.'}})
     }

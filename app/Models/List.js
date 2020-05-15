@@ -5,8 +5,9 @@ const Model = use('Model')
 
 class List extends Model {
     products(){
-        return this.belongsToMany('App/Models/Product')
-    }
+        return this.belongsToMany('App/Models/Product').withPivot(['quantity'])
+    }  
+
     user(){
         return this.belongsTo('App/Models/User')
     }
