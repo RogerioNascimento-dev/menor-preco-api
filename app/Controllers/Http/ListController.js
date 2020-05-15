@@ -19,11 +19,13 @@ class ListController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ request, response, auth }) {
 
-    const lists = await List.query().with('products').fetch()
-    return lists
-    
+    const lists = await List.query()
+    .where('user_id',auth.user.id )
+    .with('products').fetch()
+
+    return lists    
   }
 
   
@@ -35,18 +37,22 @@ class ListController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
-    const list = await List.create({user_id: auth.user.id})
-    const product_ids = request.input('product_ids')
-    const product_qtd = request.input('product_qtd')
+  async store ({ request, auth }) {
     
+    const  data = request.only(['product_ids', 'product_qtd', 'description'])
+
+    const list = await List.create({
+      user_id: auth.user.id,
+      quantity: data.product_ids.length,
+      description: data.description 
+    })
     /*
      * attach não pode ser usado neste caso pq existe 
      * atributos alem do relacionamento
     */
     let indice = 0;
-    await list.products().attach(product_ids, (row) =>{        
-        row.quantity = product_qtd[indice]         
+    await list.products().attach(data.product_ids, (row) =>{        
+        row.quantity = data.product_qtd[indice]         
         indice++
     })
      await list.load('products')
