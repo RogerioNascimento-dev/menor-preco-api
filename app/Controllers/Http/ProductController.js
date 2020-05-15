@@ -47,8 +47,9 @@ class ProductController {
    * @param {View} ctx.view
    */
   async show ({ params }) {
-    const product = await Product.findOrFail(params.id)
+    const product = await Product.findByOrFail('barcode',params.barcode)    
     await product.load('user')
+    
     return product
   }
 

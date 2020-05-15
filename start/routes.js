@@ -23,7 +23,7 @@ Route.group(() =>{
     Route.resource('/lists', 'ListController').apiOnly()
     
     Route.get('products', 'ProductController.index')
-    Route.get('products/:id', 'ProductController.show')
+    Route.get('products/:barcode', 'ProductController.show')
     Route.delete('products/:id', 'ProductController.destroy')
     Route.post('products', 'ProductController.store').validator('Product')
 
