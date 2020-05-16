@@ -44,7 +44,9 @@ class ListController {
     const list = await List.create({
       user_id: auth.user.id,
       quantity: data.product_ids.length,
-      description: data.description 
+      description: data.description,
+      max_price: 0.0, 
+      min_price: 0.0
     })
     /*
      * attach não pode ser usado neste caso pq existe 
