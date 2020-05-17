@@ -4,7 +4,10 @@ const User = use('App/Models/User')
 class UserController {
     async store({request}){
         const data = request.only(['name','logged_facebook','email','password'])
-        const user = await User.create(data)
+
+        console.log(data);
+        
+        const user = await User.findOrCreate({email:data.email} ,{...data})
         return user 
     }
 
