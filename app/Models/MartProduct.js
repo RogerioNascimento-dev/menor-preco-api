@@ -4,11 +4,21 @@
 const Model = use('Model')
 
 class MartProduct extends Model {
-    mark(){
-        return this.belongsTo('App/Model/Mark')
+
+
+    
+    static get table () {
+        return 'mart_product'
+    }    
+
+    mart(){
+        return this.belongsTo('App/Models/Mart')
+    }
+    user(){
+        return this.belongsTo('App/Models/User')
     }
     product(){
-        return this.belongsTo('App/Model/Product')
+        return this.belongsTo('App/Models/Product')
     }
 }
 

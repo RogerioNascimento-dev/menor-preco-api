@@ -31,6 +31,9 @@ Route.group(() =>{
     Route.get('users', 'UserController.index')
     Route.get('users/:id', 'UserController.show')
     Route.delete('users/:id', 'UserController.destroy')
-
     Route.get('sessions', 'SessionController.index')
+
+    Route.get('contributions/:product_id?/:mart_id?', 'MartProductController.index')
+    Route.post('contributions', 'MartProductController.store').validator('MartProduct')
+
 }).middleware(['auth'])
